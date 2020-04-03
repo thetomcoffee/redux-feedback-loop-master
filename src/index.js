@@ -3,6 +3,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App';
 import registerServiceWorker from './registerServiceWorker';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const firstReducer = (state, action) => {
+    if (action.type === 'BUTTON_ONE') {
+        console.log(`firstReducer running.`, action);
+    }
+    return {};
+};
+
+const secondReducer = (state, action) => {
+    if (action.type === 'BUTTON_TWO') {
+        console.log(`secondReducer running.`, action);
+    }
+    return {};
+}
+
+// This is creating the store
+// The store is the big JavaScript Object that holds all of the information for our application
+const storeInstance = createStore(
+    combineReducers({
+        firstReducer,
+        secondReducer
+    }),
+);
+
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
