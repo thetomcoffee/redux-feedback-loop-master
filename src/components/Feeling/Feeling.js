@@ -3,36 +3,37 @@ import { withRouter } from 'react-router-dom';
 
 
 class Feeling extends Component {
-//   state = {
-//     newElement: ''
-//   }
+    state = {
+        feelingRating: 0
+    }
 
-//   handleElementChange = (event) => {
-//     this.setState({
-//       newElement: event.target.value,
-//     });
-//   }
+    handleFeelingChange = (event) => {
+        this.setState({
+            feelingRating: event.target.value,
+        });
+    }
 
-  render() {
-    return (
-      <div className="Feeling">
-          <h2>How are you feeling today?</h2>
-            
+    handleNextClick = (event) => {
+        if(this.state.feelingRating === 0) {
+            alert('Please enter a number (1-5) for feeling.');
+        }
+        else {
+           this.props.dispatch({ type: 'ADD_FEELING', payload: this.state.feelingRating });
+           this.props.history.push('/understanding')
+        }
+    }
 
-        {/* <header className="App-header">
-          <h1 className="App-title">Feedback!</h1>
-          <h4><i>Don't forget it!</i></h4>
-        </header>
-        <br/>
-        <button onClick={() => this.props.dispatch({ type: 'BUTTON_ONE' })}>Button One</button>
-        <button onClick={() => this.props.dispatch({ type: 'BUTTON_TWO' })}>Button Two</button>
-        <br />
-        <label for="elementInput">Element</label>
-        <input type="text" placeholder="Enter Element Here" id="elementInput" onChange={this.handleElementChange} />
-        <button onClick={() => this.props.dispatch({ type: 'ADD_ELEMENT', payload: this.state.newElement})}>Add Element</button> */}
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="Feeling">
+                <h2>How are you feeling today?</h2>
+
+                <label for="feelingInput">Feeling:</label>
+                <input type="number" placeholder="Enter Feeling (1-5) Here" id="feelingInput" onChange={this.handleFeelingChange} />
+                <button onClick={this.handleNextClick}>Next</button>
+            </div>
+        );
+    }
 }
 
 export default withRouter(Feeling);
