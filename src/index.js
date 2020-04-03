@@ -6,18 +6,25 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-const firstReducer = (state, action) => {
+const firstReducer = (state = {}, action) => {
     if (action.type === 'BUTTON_ONE') {
         console.log(`firstReducer running.`, action);
     }
-    return {};
+    return state;
 };
 
-const secondReducer = (state, action) => {
+const secondReducer = (state = {}, action) => {
     if (action.type === 'BUTTON_TWO') {
         console.log(`secondReducer running.`, action);
     }
-    return {};
+    return state;
+}
+
+const elementListReducer = (state = {}, action) => {
+    if(action.type === 'ADD_ELEMENT') {
+        console.log(`The element added was: ${action.payload}`);
+    }
+    return state;
 }
 
 // This is creating the store
@@ -25,7 +32,8 @@ const secondReducer = (state, action) => {
 const storeInstance = createStore(
     combineReducers({
         firstReducer,
-        secondReducer
+        secondReducer, 
+        elementListReducer
     }),
 );
 
