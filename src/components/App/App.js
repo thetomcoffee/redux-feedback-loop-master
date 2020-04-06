@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css'; 
 import { HashRouter as Router, Route } from "react-router-dom";
+import Home from '../Home/Home';
 import Feeling from '../Feeling/Feeling';
 import Understanding from '../Understanding/Understanding';
 import Supported from '../Supported/Supported';
 import Comments from '../Comments/Comments';
 import Review from '../Review/Review';
-import Home from '../Home/Home';
+
 
 
 class App extends Component {
