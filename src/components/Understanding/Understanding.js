@@ -1,36 +1,45 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 class Understanding extends Component {
-//   state = {
-//     newElement: ''
-//   }
+    state = {
+        understandingRating: 0
+    }
 
-//   handleElementChange = (event) => {
-//     this.setState({
-//       newElement: event.target.value,
-//     });
-//   }
+    handleUndstandingChange = (event) => {
+        console.log('in handleUnderstandingChange');
+        console.log('event.target.value is:', event.target.value);
+        this.setState({
+            understandingRating: event.target.value,
+        });
+        console.log('this.state.understandingRating is:', this.state.understandingRating);
+    }
+
+    handleNextClick = (event) => {
+        console.log('in handleNextClick');
+        if(this.state.understandingRating === 0) {
+            console.log('this.state.understandingRating === 0 is true');
+            alert('Please enter a number (1-5) for understanding.');
+        }
+        else {
+            console.log('this.state.understandingRating === 0 is false');
+           this.props.dispatch({ type: 'ADD_UNDERSTANDING', payload: this.state.understandingRating });
+           this.props.history.push('/supported')
+        }
+    }
 
   render() {
     return (
       <div className="Understanding">
           <h2>How well are you understanding the content?</h2>
-        {/* <header className="App-header">
-          <h1 className="App-title">Feedback!</h1>
-          <h4><i>Don't forget it!</i></h4>
-        </header>
-        <br/>
-        <button onClick={() => this.props.dispatch({ type: 'BUTTON_ONE' })}>Button One</button>
-        <button onClick={() => this.props.dispatch({ type: 'BUTTON_TWO' })}>Button Two</button>
-        <br />
-        <label for="elementInput">Element</label>
-        <input type="text" placeholder="Enter Element Here" id="elementInput" onChange={this.handleElementChange} />
-        <button onClick={() => this.props.dispatch({ type: 'ADD_ELEMENT', payload: this.state.newElement})}>Add Element</button> */}
+          <label for="understandingInput">Feeling:</label>
+                <input type="number" placeholder="Enter Understanding (1-5) Here" id="understandingInput" onChange={this.handleUndstandingChange} />
+                <button onClick={this.handleNextClick}>Next</button>
       </div>
     );
   }
 }
 
-export default withRouter(Understanding);
+export default connect()(withRouter(Understanding));
