@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 class Comments extends Component {
-//   state = {
-//     newElement: ''
-//   }
+    state = {
+        comments: ''
+    }
 
-//   handleElementChange = (event) => {
-//     this.setState({
-//       newElement: event.target.value,
-//     });
-//   }
+    handleCommentsChange = (event) => {
+        console.log('in handleCommentsChange');
+        console.log('event.target.value is:', event.target.value);
+        this.setState({
+            comments: event.target.value,
+        });
+        console.log('this.state.comments is:', this.state.comments);
+    }
 
-  render() {
-    return (
-      <div className="Comments">
-          <h2>Any comments you want to leave?</h2>
-        {/* <header className="App-header">
-          <h1 className="App-title">Feedback!</h1>
-          <h4><i>Don't forget it!</i></h4>
-        </header>
-        <br/>
-        <button onClick={() => this.props.dispatch({ type: 'BUTTON_ONE' })}>Button One</button>
-        <button onClick={() => this.props.dispatch({ type: 'BUTTON_TWO' })}>Button Two</button>
-        <br />
-        <label for="elementInput">Element</label>
-        <input type="text" placeholder="Enter Element Here" id="elementInput" onChange={this.handleElementChange} />
-        <button onClick={() => this.props.dispatch({ type: 'ADD_ELEMENT', payload: this.state.newElement})}>Add Element</button> */}
-      </div>
-    );
-  }
+    handleNextClick = (event) => {
+        console.log('in handleNextClick');
+        this.props.dispatch({ type: 'ADD_COMMENTS', payload: this.state.comments });
+        this.props.history.push('/review')
+
+    }
+
+    render() {
+        return (
+            <div className="Comments">
+                <h2>Any comments you want to leave?</h2>
+                <textarea placeholder="Enter comments here..." onChange={this.handleCommentsChange} />
+                <br />
+                <button onClick={this.handleNextClick}>Next</button>
+            </div>
+        );
+    }
 }
 
-export default withRouter(Comments);
+export default connect()(withRouter(Comments));
