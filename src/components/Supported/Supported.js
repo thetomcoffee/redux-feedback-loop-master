@@ -1,36 +1,45 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 class Supported extends Component {
-//   state = {
-//     newElement: ''
-//   }
+    state = {
+        supportedRating: 0
+    }
 
-//   handleElementChange = (event) => {
-//     this.setState({
-//       newElement: event.target.value,
-//     });
-//   }
+    handleSupportedChange = (event) => {
+        console.log('in handleSupportedChange');
+        console.log('event.target.value is:', event.target.value);
+        this.setState({
+            supportedRating: event.target.value,
+        });
+        console.log('this.state.supportedRating is:', this.state.supportedRating);
+    }
+
+    handleNextClick = (event) => {
+        console.log('in handleNextClick');
+        if(this.state.supportedRating === 0) {
+            console.log('this.state.supportedRating === 0 is true');
+            alert('Please enter a number (1-5) for supported.');
+        }
+        else {
+            console.log('this.state.supportedRating === 0 is false');
+           this.props.dispatch({ type: 'ADD_SUPPORTED', payload: this.state.supportedRating });
+           this.props.history.push('/comments')
+        }
+    }
 
   render() {
     return (
       <div className="Supported">
           <h2>How well are you being supported?</h2>
-        {/* <header className="App-header">
-          <h1 className="App-title">Feedback!</h1>
-          <h4><i>Don't forget it!</i></h4>
-        </header>
-        <br/>
-        <button onClick={() => this.props.dispatch({ type: 'BUTTON_ONE' })}>Button One</button>
-        <button onClick={() => this.props.dispatch({ type: 'BUTTON_TWO' })}>Button Two</button>
-        <br />
-        <label for="elementInput">Element</label>
-        <input type="text" placeholder="Enter Element Here" id="elementInput" onChange={this.handleElementChange} />
-        <button onClick={() => this.props.dispatch({ type: 'ADD_ELEMENT', payload: this.state.newElement})}>Add Element</button> */}
+          <label for="supportedInput">Supported:</label>
+                <input type="number" placeholder="Enter Supported (1-5) Here" id="supportedInput" onChange={this.handleSupportedChange} />
+                <button onClick={this.handleNextClick}>Next</button>
       </div>
     );
   }
 }
 
-export default withRouter(Supported);
+export default connect()(withRouter(Supported));
