@@ -14,7 +14,7 @@ class App extends Component {
   state = {
     newElement: ''
   }
-
+  
   handleElementChange = (event) => {
     this.setState({
       newElement: event.target.value,
