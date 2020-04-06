@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 class Feeling extends Component {
@@ -8,16 +9,22 @@ class Feeling extends Component {
     }
 
     handleFeelingChange = (event) => {
+        console.log('in handleFeelingChange');
+        console.log('event.target.value is:', event.target.value);
         this.setState({
             feelingRating: event.target.value,
         });
+        console.log('this.state.feelingRating is:', this.state.feelingRating);
     }
 
     handleNextClick = (event) => {
+        console.log('in handleNextClick');
         if(this.state.feelingRating === 0) {
+            console.log('this.state.feelingRating === 0 is true');
             alert('Please enter a number (1-5) for feeling.');
         }
         else {
+            console.log('this.state.feelingRating === 0 is false');
            this.props.dispatch({ type: 'ADD_FEELING', payload: this.state.feelingRating });
            this.props.history.push('/understanding')
         }
@@ -36,4 +43,4 @@ class Feeling extends Component {
     }
 }
 
-export default withRouter(Feeling);
+export default connect()(withRouter(Feeling));
